@@ -35,8 +35,12 @@ class Report {
       id: map['id'],
       status:
           ReportStatus.values.firstWhereOrNull((e) => e.name == map['status']),
-      createdAt: DateTime.tryParse(map['created_at']),
-      completedAt: DateTime.tryParse(map['completed_at']),
+      createdAt: map['created_at'] != null
+          ? DateTime.tryParse(map['created_at'])
+          : null,
+      completedAt: map['completed_at'] != null
+          ? DateTime.tryParse(map['completed_at'])
+          : null,
       turnaroundTime: map['turnaround_time'],
       dueTime: DateTime.tryParse(map['due_time']),
       package: CheckrPackage.values

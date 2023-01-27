@@ -12,6 +12,8 @@ export 'src/models/candidate/candidate_create_params.dart';
 
 export 'src/models/report/report.dart';
 
+export 'src/models/geo/geo_create_params.dart';
+
 export 'src/helpers/checkr_utils.dart';
 export 'src/helpers/enums.dart';
 export 'src/helpers/checkr_utils.dart';
@@ -47,6 +49,20 @@ class Checkr {
     );
     if (response.statusCode == 201 || response.statusCode == 200) {
       return Candidate.fromMap(response.data);
+    } else {
+      throw _throwCheckrException(response.data);
+    }
+  }
+
+  Future<String> createGeo(GeoCreateParams params) async {
+    Response<dynamic> response = await _client.request(
+      method: 'POST',
+      path: '/geos',
+      data: params.toMap(),
+    );
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      return response.data['id'];
     } else {
       throw _throwCheckrException(response.data);
     }

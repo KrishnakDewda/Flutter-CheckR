@@ -9,6 +9,7 @@ class CandidateCreateParams {
   final DateTime dob;
   final String ssn;
   final String? customId;
+  final List<String> geoIds;
 
   CandidateCreateParams({
     required this.firstName,
@@ -19,6 +20,7 @@ class CandidateCreateParams {
     required this.ssn,
     this.customId,
     this.middleName,
+    required this.geoIds,
   }) : assert(CheckrUtils.isEmailValid(email), 'Invalid Email');
 
   Map<String, dynamic> toMap() {
@@ -32,6 +34,7 @@ class CandidateCreateParams {
       'dob': CheckrUtils.toDateStringFormat(dob),
       'ssn': ssn,
       'custom_id': customId,
+      'geo_ids': geoIds,
     };
   }
 }

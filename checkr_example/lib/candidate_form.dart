@@ -15,6 +15,7 @@ class _CandidateFormState extends State<CandidateForm> {
   Candidate? _candidate;
   Invitation? _invitation;
   Report? _report;
+  String? _geoId;
 
   bool _loading = false;
 
@@ -42,6 +43,17 @@ class _CandidateFormState extends State<CandidateForm> {
     try {
       _setLoading(true);
 
+      if (_geoId == null) {
+        GeoCreateParams geoCreateParams = GeoCreateParams(
+          name: _city.text,
+          city: _city.text,
+          state: _state.text,
+          country: _country.text,
+        );
+
+        _geoId = await _checkr.createGeo(geoCreateParams);
+      }
+
       CandidateCreateParams candidateCreateParams = CandidateCreateParams(
         firstName: _firstName.text,
         lastName: _lastName.text,
@@ -49,6 +61,7 @@ class _CandidateFormState extends State<CandidateForm> {
         zipCode: _zipCode.text,
         dob: DateTime.parse(_dob.text),
         ssn: _ssn.text,
+        geoIds: _geoId != null ? [_geoId!] : [],
       );
 
       _candidate = await _checkr.createCandidate(candidateCreateParams);
